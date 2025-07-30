@@ -13,7 +13,8 @@
                      <a href="{{ route('suppliers.index') }}"> <i class="menu-icon fa fa-table"></i>Supplier</a>
                  </li>
                  <li>
-                     <a href="widgets.html"> <i class="menu-icon fa fa-bar-chart-o"></i>EOQ Setting</a>
+                     <a href="{{ route('eoq_settings.index') }}"> <i class="menu-icon fa fa-bar-chart-o"></i>EOQ
+                         Setting</a>
                  </li>
                  <li>
                      <a href="widgets.html"> <i class="menu-icon fa fa-users"></i>User Management</a>

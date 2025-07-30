@@ -33,3 +33,15 @@ Route::controller(App\Http\Controllers\CategoryController::class)
         Route::put('/{category}', 'update')->name('categories.update');
         Route::delete('/{category}', 'destroy')->name('categories.destroy');
     });
+
+Route::controller(App\Http\Controllers\EoqSettingController::class)
+    ->prefix('eoq_settings')
+    ->group(function () {
+        Route::get('/', 'index')->name('eoq_settings.index');
+        Route::get('/create', 'create')->name('eoq_settings.create');
+        Route::post('/store', 'store')->name('eoq_settings.store');
+        Route::get('/{eoqSetting}', 'show')->name('eoq_settings.show');
+        Route::get('/{eoqSetting}/edit', 'edit')->name('eoq_settings.edit');
+        Route::put('/{eoqSetting}', 'update')->name('eoq_settings.update');
+        Route::delete('/{eoqSetting}', 'destroy')->name('eoq_settings.destroy');
+    });
