@@ -17,7 +17,7 @@
                          Setting</a>
                  </li>
                  <li>
-                     <a href="widgets.html"> <i class="menu-icon fa fa-users"></i>User Management</a>
+                     <a href="{{ route('users.index') }}"> <i class="menu-icon fa fa-users"></i>User Management</a>
                  </li>
 
 

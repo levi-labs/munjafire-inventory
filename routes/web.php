@@ -45,3 +45,16 @@ Route::controller(App\Http\Controllers\EoqSettingController::class)
         Route::put('/{eoqSetting}', 'update')->name('eoq_settings.update');
         Route::delete('/{eoqSetting}', 'destroy')->name('eoq_settings.destroy');
     });
+
+Route::controller(App\Http\Controllers\UserController::class)
+    ->prefix('users')
+    ->group(function () {
+        Route::get('/', 'index')->name('users.index');
+        Route::get('/create', 'create')->name('users.create');
+        Route::post('/store', 'store')->name('users.store');
+        Route::get('/{user}', 'show')->name('users.show');
+        Route::get('/{user}/edit', 'edit')->name('users.edit');
+        Route::put('/{user}', 'update')->name('users.update');
+        Route::delete('/{user}', 'destroy')->name('users.destroy');
+        Route::post('/{user}/reset-password', 'resetPassword')->name('users.resetPassword');
+    });
