@@ -7,7 +7,7 @@
                  </li>
                  <li class="menu-title">Master</li><!-- /.menu-title -->
                  <li>
-                     <a href="widgets.html"> <i class="menu-icon fa fa-cogs"></i>Category</a>
+                     <a href="{{ route('categories.index') }}"> <i class="menu-icon fa fa-cogs"></i>Category</a>
                  </li>
                  <li>
                      <a href="{{ route('suppliers.index') }}"> <i class="menu-icon fa fa-table"></i>Supplier</a>

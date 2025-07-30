@@ -21,3 +21,15 @@ Route::controller(App\Http\Controllers\SupplierController::class)
         Route::put('/{supplier}', 'update')->name('suppliers.update');
         Route::delete('/{supplier}', 'destroy')->name('suppliers.destroy');
     });
+
+Route::controller(App\Http\Controllers\CategoryController::class)
+    ->prefix('categories')
+    ->group(function () {
+        Route::get('/', 'index')->name('categories.index');
+        Route::get('/create', 'create')->name('categories.create');
+        Route::post('/store', 'store')->name('categories.store');
+        Route::get('/{category}', 'show')->name('categories.show');
+        Route::get('/{category}/edit', 'edit')->name('categories.edit');
+        Route::put('/{category}', 'update')->name('categories.update');
+        Route::delete('/{category}', 'destroy')->name('categories.destroy');
+    });
