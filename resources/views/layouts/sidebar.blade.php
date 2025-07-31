@@ -25,7 +25,7 @@
 
 
                  <li>
-                     <a href="widgets.html"> <i class="menu-icon fa fa-tags"></i>Product</a>
+                     <a href="{{ route('products.index') }}"> <i class="menu-icon fa fa-tags"></i>Product</a>
                  </li>
                  <li>
                      <a href="widgets.html"> <i class="menu-icon fa fa-arrow-down"></i>Stock In</a>
