@@ -70,3 +70,15 @@ Route::controller(App\Http\Controllers\ProductController::class)
         Route::put('/{product}', 'update')->name('products.update');
         Route::delete('/{product}', 'destroy')->name('products.destroy');
     });
+
+Route::controller(App\Http\Controllers\StockInController::class)
+    ->prefix('stock_in')
+    ->group(function () {
+        Route::get('/', 'index')->name('stock_in.index');
+        Route::get('/create', 'create')->name('stock_in.create');
+        Route::post('/store', 'store')->name('stock_in.store');
+        Route::get('/{stockIn}', 'show')->name('stock_in.show');
+        Route::get('/{stockIn}/edit', 'edit')->name('stock_in.edit');
+        Route::put('/{stockIn}', 'update')->name('stock_in.update');
+        Route::delete('/{stockIn}', 'destroy')->name('stock_in.destroy');
+    });

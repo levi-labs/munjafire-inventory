@@ -33,6 +33,20 @@
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" rel="stylesheet" />
 
     <style>
+        .bg-indigo {
+            background-color: #2981fd;
+            color: white;
+            font-weight: bold;
+        }
+
+        .card {
+            border-radius: 20px !important;
+        }
+
+        .card-header {
+            border-radius: 20px 20px 0 0 !important;
+        }
+
         #weatherWidget .currentDesc {
             color: #ffffff !important;
         }
