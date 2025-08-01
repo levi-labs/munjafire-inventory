@@ -27,7 +27,7 @@
                             </div>
                             <div class="col-12 col-md-9">
                                 <input type="number" min="0" id="price" name="price" placeholder="0"
-                                    class="form-control" value="{{ old('price', $stockIn->price) }}">
+                                    class="form-control" value="{{ old('price') ?? formatNumber($stockIn->price) }}">
                                 @error('price')
                                     <small class="help-block form-text text-danger">{{ $message }}</small>
                                 @enderror

@@ -40,11 +40,8 @@
                                 </label>
                             </div>
                             <div class="col-12 col-md-9">
-                                @php
-                                    $cleanNumber = explode('.', $product->price)[0];
-                                @endphp
                                 <input type="number" min="0" id="price" name="price" placeholder="0"
-                                    class="form-control" value="{{ old('price') ?? $cleanNumber }}">
+                                    class="form-control" value="{{ old('price') ?? formatNumber($product->price) }}">
                                 @error('price')
                                     <small class="help-block form-text text-danger">{{ $message }}</small>
                                 @enderror
