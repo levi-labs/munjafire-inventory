@@ -31,7 +31,7 @@
                      <a href="{{ route('stock_in.index') }}"> <i class="menu-icon fa fa-arrow-down"></i>Stock In</a>
                  </li>
                  <li>
-                     <a href="widgets.html"> <i class="menu-icon fa fa-arrow-up"></i>Stock Out</a>
+                     <a href="{{ route('stock_out.index') }}"> <i class="menu-icon fa fa-arrow-up"></i>Stock Out</a>
                  </li>
 
                  <li class="menu-title">Reports</li><!-- /.menu-title -->
