@@ -87,6 +87,7 @@ Route::controller(App\Http\Controllers\StockOutController::class)
     ->prefix('stock_out')
     ->group(function () {
         Route::get('/', 'index')->name('stock_out.index');
+        Route::get('/eoq', 'eoq')->name('stock_out.eoq');
         Route::get('/create', 'create')->name('stock_out.create');
         Route::post('/store', 'store')->name('stock_out.store');
         Route::get('/{stockOut}', 'show')->name('stock_out.show');

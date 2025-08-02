@@ -137,4 +137,11 @@ class StockOutController extends Controller
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
+
+    public function eoq()
+    {
+        $title = 'EOQ Settings';
+        $data = getEoq(1); // Assuming product ID 1 for demonstration
+        dd($data); // Debugging output, remove in production
+    }
 }

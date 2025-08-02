@@ -25,6 +25,7 @@
                     <div class="row mt-2">
                         <div class="col-md-6">
                             <a href="{{ route('stock_out.create') }}" class="btn btn-primary btn-sm">Add Stock Out</a>
+                            <a href="{{ route('stock_out.eoq') }}" class="btn btn-primary btn-sm">eoq</a>
                         </div>
                     </div>
                 </div>
