@@ -41,6 +41,9 @@
                  <li>
                      <a href="widgets.html"> <i class="menu-icon fa fa-cloud-upload"></i>Report Out</a>
                  </li>
+                 <li>
+                     <a href="widgets.html"> <i class="menu-icon fa fa-tachometer"></i>Report EOQ</a>
+                 </li>
              </ul>
          </div><!-- /.navbar-collapse -->
      </nav>
