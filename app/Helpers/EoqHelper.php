@@ -1,7 +1,5 @@
 <?php
 
-
-
 use App\Models\EOQSetting;
 use App\Models\Product;
 use App\Models\StockOut;
@@ -13,6 +11,14 @@ if (!function_exists('formatNumber')) {
         return explode('.', $number)[0];
     }
 }
+
+if (!function_exists(('formatRupiah'))) {
+    function formatRupiah($number)
+    {
+        return 'Rp ' . number_format($number, 0, ',', '.');
+    }
+}
+
 if (!function_exists('getEoq')) {
     function getEoq($product)
     {

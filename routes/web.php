@@ -95,3 +95,9 @@ Route::controller(App\Http\Controllers\StockOutController::class)
         Route::put('/{stockOut}', 'update')->name('stock_out.update');
         Route::delete('/{stockOut}', 'destroy')->name('stock_out.destroy');
     });
+Route::controller(App\Http\Controllers\ReportStockInController::class)
+    ->prefix('report_stock_in')
+    ->group(function () {
+        Route::get('/', 'index')->name('report_stock_in.index');
+        Route::post('/store', 'store')->name('report_stock_in.store');
+    });

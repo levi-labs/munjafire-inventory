@@ -36,7 +36,8 @@
 
                  <li class="menu-title">Reports</li><!-- /.menu-title -->
                  <li>
-                     <a href="widgets.html"> <i class="menu-icon fa fa-cloud-download"></i>Report In</a>
+                     <a href="{{ route('report_stock_in.index') }}"> <i
+                             class="menu-icon fa fa-cloud-download"></i>Report In</a>
                  </li>
                  <li>
                      <a href="widgets.html"> <i class="menu-icon fa fa-cloud-upload"></i>Report Out</a>
