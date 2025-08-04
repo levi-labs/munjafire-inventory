@@ -40,7 +40,8 @@
                              class="menu-icon fa fa-cloud-download"></i>Report In</a>
                  </li>
                  <li>
-                     <a href="widgets.html"> <i class="menu-icon fa fa-cloud-upload"></i>Report Out</a>
+                     <a href="{{ route('report_stock_out.index') }}"> <i class="menu-icon fa fa-cloud-upload"></i>Report
+                         Out</a>
                  </li>
                  <li>
                      <a href="widgets.html"> <i class="menu-icon fa fa-tachometer"></i>Report EOQ</a>

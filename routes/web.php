@@ -101,3 +101,10 @@ Route::controller(App\Http\Controllers\ReportStockInController::class)
         Route::get('/', 'index')->name('report_stock_in.index');
         Route::post('/store', 'store')->name('report_stock_in.store');
     });
+
+Route::controller(App\Http\Controllers\ReportStockOutController::class)
+    ->prefix('report_stock_out')
+    ->group(function () {
+        Route::get('/', 'index')->name('report_stock_out.index');
+        Route::post('/store', 'store')->name('report_stock_out.store');
+    });

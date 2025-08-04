@@ -15,7 +15,7 @@
             box-sizing: border-box;
         }
 
-        header {
+        header .header {
             padding: 10px;
             display: flex;
             justify-content: center;
@@ -123,6 +123,15 @@
 
             header {
                 padding: 0;
+                position: relative;
+            }
+
+            .header {
+                width: 100%;
+                height: auto;
+                /* padding: 10px; */
+                background-color: #fff;
+                border-bottom: 2px solid #000;
             }
 
             .row {
@@ -161,6 +170,34 @@
                 width: 15%;
                 text-align: left;
             }
+
+            .main-content {
+                margin-top: 0;
+                padding: 10px 40px 40px 40px !important;
+            }
+
+            table {
+                page-break-inside: auto;
+                break-inside: auto;
+            }
+
+            tr,
+            td,
+            th {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            thead {
+                display: table-header-group;
+                /* ✅ agar header table muncul di setiap halaman */
+            }
+
+            tbody {
+                display: table-row-group;
+            }
+
+
         }
     </style>
 </head>
