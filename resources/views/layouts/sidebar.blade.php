@@ -33,6 +33,9 @@
                  <li>
                      <a href="{{ route('stock_out.index') }}"> <i class="menu-icon fa fa-arrow-up"></i>Stock Out</a>
                  </li>
+                 <li>
+                     <a href="{{ route('eoq_result.index') }}"> <i class="menu-icon fa fa-tasks"></i>EOQ Result</a>
+                 </li>
 
                  <li class="menu-title">Reports</li><!-- /.menu-title -->
                  <li>

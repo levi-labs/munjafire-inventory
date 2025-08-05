@@ -47,14 +47,15 @@ if (!function_exists('getEoq')) {
             $D = $stockOuts->sum('quantity');
             $S = $cost->ordering_cost;
             $H = $cost->storage_cost;
-            $leadTime = $cost->lead_time;
-            $average = ($D / 30) * $leadTime; // Assuming 30 days in a month
+            $leadTime = round($cost->lead_time / 30, 3);
+            $average = $stockOuts->average('quantity'); // Assuming 30 days in a month
             $max = $stockOuts->max('quantity');
+            $eoq = round(sqrt((2 * $D * $S) / $H));
+            $ss = round(($max - $average) * ($leadTime));
+            $rop = $ss + ($average * $leadTime);
+            $frequency = round($D / $eoq);
             foreach ($stockOuts as $stockOut) {
-                $eoq = round(sqrt((2 * $D * $S) / $H));
-                $rop = round($average * (5 / 30));
-                $ss = round(($max - $average) * ($leadTime / 30));
-                $frequency = round($D / $eoq);
+
                 $eoq_result[$index] = [
 
                     'product_id' => $stockOut->product_id,
