@@ -21,10 +21,18 @@
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
+                    @elseif(session('info'))
+                        <div class="mt-2 sufee-alert alert with-close alert-info alert-dismissible fade show">
+                            <span class="badge badge-pill badge-info">Info</span>
+                            {{ session('info') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
                     @endif
                     <div class="row mt-2">
                         <div class="col-md-6">
-                            <a href="{{ route('stock_in.create') }}" class="btn btn-primary btn-sm">Analyze</a>
+                            <a href="{{ route('eoq_result.store') }}" class="btn btn-primary btn-sm">Analyze</a>
                         </div>
                     </div>
                 </div>
@@ -37,31 +45,34 @@
                                 <th>EOQ</th>
                                 <th>ROP</th>
                                 <th>SS</th>
-                                <th>Frequency</th>
+                                <th>Period</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($datas as $data)
+                                @php
+                                    $dateNow = \Carbon\Carbon::parse($data->date);
+                                    $start = $dateNow->copy()->subMonths(5)->startOfMonth();
+                                @endphp
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>
                                         {{ $data->product->name }}
                                     </td>
-                                    <td>{{ $data->price }}</td>
-                                    <td>{{ $data->quantity }}</td>
-                                    <td>{{ $data->date }}</td>
+                                    <td>{{ $data->eoq }}</td>
+                                    <td>{{ $data->reorder_point }}</td>
+                                    <td>{{ $data->safety_stock }}</td>
+                                    <td>{{ $start->format('Y-F') . ' - ' . $dateNow->format('Y-F') }}</td>
                                     <td>
-                                        <a href="{{ route('stock_in.show', $data->id) }}"
+                                        <a href="{{ route('eoq_result.show', $data->id) }}"
                                             class="btn btn-info btn-sm">Detail</a>
-                                        <a href="{{ route('stock_in.edit', $data->id) }}"
-                                            class="btn btn-warning btn-sm">Edit</a>
-                                        <form action="{{ route('stock_in.destroy', $data->id) }}" method="POST"
+                                        <form action="{{ route('eoq_result.destroy', $data->id) }}" method="POST"
                                             style="display:inline;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Deleting this product may also delete related data. Are you sure?')">Delete</button>
+                                                onclick="return confirm('Delete data, Are you sure?')">Delete</button>
                                         </form>
                                     </td>
                                 </tr>

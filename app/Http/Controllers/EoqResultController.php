@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\EoqResult;
+use App\Models\StockOut;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EoqResultController extends Controller
 {
@@ -18,6 +20,15 @@ class EoqResultController extends Controller
 
         return view('pages.eoq_result.index', compact('title', 'datas'));
     }
+    public function eoq()
+    {
+        $datas = getEoq(1); // Assuming product ID 1 for demonstration
+        if (!$datas) {
+            return back()->with('info', 'This month/`s data has already been processed');
+        } else {
+            return back()->with('success', 'This month/`s data has already been processed');
+        }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -30,17 +41,20 @@ class EoqResultController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    public function store(Request $request) {}
 
     /**
      * Display the specified resource.
      */
     public function show(EoqResult $eoqResult)
     {
-        //
+        $title = 'Economic Order Quantity Detail';
+
+        $stock_outs = StockOut::with('product')
+            ->whereIn('id', $eoqResult->stock_out_id)
+            ->get();
+
+        return view('pages.eoq_result.show', compact('title', 'eoqResult', 'stock_outs'));
     }
 
     /**
@@ -64,6 +78,8 @@ class EoqResultController extends Controller
      */
     public function destroy(EoqResult $eoqResult)
     {
-        //
+        $eoqResult->delete();
+
+        return back()->with('success', 'EOQ Result data deleted successfully');
     }
 }

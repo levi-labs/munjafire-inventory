@@ -14,9 +14,14 @@ return new class extends Migration
         Schema::create('eoq_results', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+            $table->integer('total_demand');
+            $table->integer('max');
+            $table->integer('average');
             $table->decimal('eoq', 10, 2);
             $table->decimal('reorder_point', 10, 2);
             $table->decimal('safety_stock', 10, 2);
+            $table->decimal('frequency', 10, 2);
+            $table->json('stock_out_id')->nullable();
             $table->date('date');
             $table->timestamps();
         });

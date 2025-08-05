@@ -1,9 +1,11 @@
 <?php
 
+use App\Models\EoqResult;
 use App\Models\EOQSetting;
 use App\Models\Product;
 use App\Models\StockOut;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 if (!function_exists('formatNumber')) {
     function formatNumber($number)
@@ -25,6 +27,7 @@ if (!function_exists('getEoq')) {
         $D = null;
         $now = Carbon::now();
         $bulanIni = $now->format('Y-m');
+        $month_year = explode('-', $bulanIni);
         $startDate = $now->copy()->subMonths(5)->startOfMonth();
         $endDate = $now->copy()->endOfMonth();
         $cost = EOQSetting::first();
@@ -32,14 +35,14 @@ if (!function_exists('getEoq')) {
             return false;
         }
         $products = Product::all();
+        $check_exist = EoqResult::whereMonth('date', $month_year[1])
+            ->whereYear('date', $month_year[0])
+            ->exists();
+        if ($check_exist) {
+            return false;
+        }
+        DB::table('eoq_results')->truncate();
         foreach ($products as $index => $product) {
-            // $exists = Eo::where('product_id', $product->id)
-            //     ->whereBetween('date', [$startDate, $endDate])
-            //     ->orderBy('date', 'asc')
-            //     ->get();
-            // if ($exists) {
-            //     continue;
-            // }
             $stockOuts = StockOut::where('product_id', $product->id)
                 ->whereBetween('date', [$startDate, $endDate])
                 ->get();
@@ -54,21 +57,32 @@ if (!function_exists('getEoq')) {
             $ss = round(($max - $average) * ($leadTime));
             $rop = $ss + ($average * $leadTime);
             $frequency = round($D / $eoq);
-            foreach ($stockOuts as $stockOut) {
+            $stockOutIds = $stockOuts->pluck('id')->toArray();
+            $eoq_result[$index] = [
+                'product_id' => $product->id,
+                'product_name' => $product->name,
+                'D' => $D,
+                'max' => $max,
+                'average' => $average,
+                'eoq' => $eoq,
+                'rop' => $rop,
+                'ss' => $ss,
+                'frequency' => $frequency,
+                'stock_out_id' => $stockOutIds
+            ];
 
-                $eoq_result[$index] = [
-
-                    'product_id' => $stockOut->product_id,
-                    'product_name' => $stockOut->product->name,
-                    'D' => $D,
-                    'max' => $max,
-                    'average' => $average,
-                    'eoq' => $eoq,
-                    'rop' => $rop,
-                    'ss' => $ss,
-                    'frequency' => $frequency,
-                ];
-            }
+            EoqResult::create([
+                'product_id' => $product->id,
+                'total_demand' => $D,
+                'max' => $max,
+                'average' => $average,
+                'eoq' => $eoq,
+                'reorder_point' => $rop,
+                'safety_stock' => $ss,
+                'frequency' => $frequency,
+                'stock_out_id' => $stockOutIds,
+                'date' => Carbon::now()
+            ]);
         }
         return $eoq_result;
     }

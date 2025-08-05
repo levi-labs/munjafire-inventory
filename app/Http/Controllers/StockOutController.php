@@ -138,10 +138,12 @@ class StockOutController extends Controller
         }
     }
 
-    public function eoq()
-    {
-        $title = 'EOQ Settings';
-        $data = getEoq(1); // Assuming product ID 1 for demonstration
-        dd($data); // Debugging output, remove in production
-    }
+    // public function eoq()
+    // {
+    //     $title = 'EOQ Settings';
+    //     $datas = getEoq(1); // Assuming product ID 1 for demonstration
+    //     if (!$datas) {
+    //         return view('pages.eoq_result.index','datas')
+    //     }
+    // }
 }

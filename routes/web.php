@@ -113,5 +113,7 @@ Route::controller(App\Http\Controllers\EoqResultController::class)
     ->prefix('eoq_result')
     ->group(function () {
         Route::get('/', 'index')->name('eoq_result.index');
-        Route::post('/store', 'store')->name('eoq_result.store');
+        Route::get('/store', 'eoq')->name('eoq_result.store');
+        Route::get('/show/{eoqResult}', 'show')->name('eoq_result.show');
+        Route::delete('/{eoqResult}', 'destroy')->name('eoq_result.destroy');
     });
