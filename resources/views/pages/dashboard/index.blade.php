@@ -1,5 +1,20 @@
 @extends('layouts.main')
 @section('content')
+    <style>
+        .my-pie {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .my-pie canvas {
+            width: 65% !important;
+            height: 65% !important;
+
+            display: flex;
+            justify-content: center;
+        }
+    </style>
     <!-- Widgets  -->
     <div class="row">
         <div class="col-lg-3 col-md-6">
@@ -11,7 +26,7 @@
                         </div>
                         <div class="stat-content">
                             <div class="text-left dib">
-                                <div class="stat-text">$<span class="count">23569</span></div>
+                                <div class="stat-text"><span class="count">2356</span></div>
                                 <div class="stat-heading">Stock Out</div>
                             </div>
                         </div>
@@ -65,7 +80,7 @@
                         </div>
                         <div class="stat-content">
                             <div class="text-left dib">
-                                <div class="stat-text"><span class="count">2986</span></div>
+                                <div class="stat-text"><span class="count">5</span></div>
                                 <div class="stat-heading">Users</div>
                             </div>
                         </div>
@@ -80,51 +95,89 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="box-title">Information Stock </h4>
+                    <h4 class="box-title">Information</h4>
                 </div>
-                <div class="row">
-                    <div class="col-lg-8">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
                         <div class="card-body">
                             <!-- <canvas id="TrafficChart"></canvas>   -->
-                            <div id="traffic-chart" class="traffic-chart"></div>
+                            <h4 class="mb-3">Data Products</h4>
+                            <canvas id="products"></canvas>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    {{-- <div class="col-lg-4">
                         <div class="card-body">
-                            <div class="progress-box progress-1">
-                                <h4 class="por-title">Visits</h4>
-                                <div class="por-txt">96,930 Users (40%)</div>
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-flat-color-1" role="progressbar" style="width: 40%;"
-                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>EOQ</th>
+                                        <th>ROP</th>
+                                        <th>SS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>data1</td>
+                                        <td>data1</td>
+                                        <td>data1</td>
+                                        <td>data1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data1</td>
+                                        <td>data1</td>
+                                        <td>data1</td>
+                                        <td>data1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data1</td>
+                                        <td>data1</td>
+                                        <td>data1</td>
+                                        <td>data1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>data1</td>
+                                        <td>data1</td>
+                                        <td>data1</td>
+                                        <td>data1</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> --}}
+                </div> <!-- /.row -->
+                <div class="card-body"></div>
+            </div>
+        </div><!-- /# column -->
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="box-title">Information</h4>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="card-body text-center">
+                            <!-- <canvas id="TrafficChart"></canvas>   -->
+                            <h4 class="mb-3">Stock In</h4>
+                            <div class="my-pie">
+                                <canvas id="stockin"></canvas>
                             </div>
-                            <div class="progress-box progress-2">
-                                <h4 class="por-title">Bounce Rate</h4>
-                                <div class="por-txt">3,220 Users (24%)</div>
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-flat-color-2" role="progressbar" style="width: 24%;"
-                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <div class="progress-box progress-2">
-                                <h4 class="por-title">Unique Visitors</h4>
-                                <div class="por-txt">29,658 Users (60%)</div>
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-flat-color-3" role="progressbar" style="width: 60%;"
-                                        aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <div class="progress-box progress-2">
-                                <h4 class="por-title">Targeted Visitors</h4>
-                                <div class="por-txt">99,658 Users (90%)</div>
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-flat-color-4" role="progressbar" style="width: 90%;"
-                                        aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div> <!-- /.card-body -->
+
+                        </div>
                     </div>
+                    <div class="col-lg-6">
+                        <div class="card-body text-center">
+                            <!-- <canvas id="TrafficChart"></canvas>   -->
+                            <h4 class="mb-3">Stock Out</h4>
+                            <div class="my-pie">
+                                <canvas width=200 height="200" id="stockout"></canvas>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div> <!-- /.row -->
                 <div class="card-body"></div>
             </div>
@@ -133,4 +186,88 @@
     <!--  /Traffic -->
     <div class="clearfix"></div>
     <!-- Orders -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const product = document.getElementById('products');
+        const stock_in = document.getElementById('stockin');
+        const stock_out = document.getElementById('stockout');
+        const hoverstockInSum = {!! json_encode($stock_in->pluck('total_quantity')) !!}
+        const hoverstockInCount = {!! json_encode($stock_in->pluck('total_product')) !!}
+        const hoverstockOutSum = {!! json_encode($stock_out->pluck('total_quantity')) !!}
+        const hoverstockOutCount = {!! json_encode($stock_out->pluck('total_product')) !!}
+
+        new Chart(product, {
+            type: 'bar',
+            data: {
+                labels: {!! json_encode($products->pluck('name')->toArray()) !!},
+                datasets: [{
+                    label: 'Stock Of Product',
+                    data: {!! json_encode($products->pluck('stock')->toArray()) !!},
+                    backgroundColor: {!! json_encode($colors) !!},
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        new Chart(stock_in, {
+            type: 'doughnut',
+            data: {
+                labels: {!! json_encode($stock_in->pluck('name')->toArray()) !!},
+                datasets: [{
+                    label: 'Stock Of Product',
+                    data: {!! json_encode($stock_in->pluck('total_product')->toArray()) !!},
+                    backgroundColor: {!! json_encode($colors) !!},
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const index = context.dataIndex;
+                                const count = hoverstockInCount[index];
+                                const sum = hoverstockInSum[index];
+                                const label = context.label || '';
+                                return `${label}:\nCount: ${count}, Quantity: ${sum}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        new Chart(stock_out, {
+            type: 'doughnut',
+            data: {
+                labels: {!! json_encode($stock_out->pluck('name')->toArray()) !!},
+                datasets: [{
+                    label: 'Stock Of Product',
+                    data: {!! json_encode($stock_out->pluck('total_product')->toArray()) !!},
+                    backgroundColor: {!! json_encode($colors) !!},
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const index_out = context.dataIndex;
+                                const count_out = hoverstockOutCount[index_out];
+                                const sum_out = hoverstockOutSum[index_out];
+                                const label_out = context.label || '';
+                                return `${label_out}:\nCount: ${count_out}, Quantity: ${sum_out}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 @endsection
