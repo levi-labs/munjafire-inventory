@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->integer('quantity');
-            $table->decimal('price', 10, 2);
             $table->date('date');
             $table->text('description')->nullable();
             $table->string('receipt_image')->nullable();
