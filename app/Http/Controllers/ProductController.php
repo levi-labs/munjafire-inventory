@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EoqResult;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -55,8 +56,15 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $title = 'Product Details';
+        $eoq   = EoqResult::where('product_id', $product->id)
+            ->orderBy('created_at', 'desc')
+            ->first();
 
-        return view('pages.products.show', compact('title', 'product'));
+        return view('pages.products.show', compact(
+            'title',
+            'product',
+            'eoq'
+        ));
     }
 
     /**

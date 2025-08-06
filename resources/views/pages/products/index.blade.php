@@ -44,7 +44,7 @@
                                 <tr>
                                     <td>{{ $product->name }}</td>
                                     <td>{{ $product->category->name }}</td>
-                                    <td>{{ $product->price }}</td>
+                                    <td>{{ formatRupiah($product->price) }}</td>
                                     <td>{{ $product->stock }}</td>
                                     <td>
                                         <a href="{{ route('products.show', $product->id) }}"
