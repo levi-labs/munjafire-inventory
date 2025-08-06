@@ -47,7 +47,7 @@ Route::controller(App\Http\Controllers\CategoryController::class)
         Route::get('/{category}/edit', 'edit')->name('categories.edit');
         Route::put('/{category}', 'update')->name('categories.update');
         Route::delete('/{category}', 'destroy')->name('categories.destroy');
-    })->middleware('auth');
+    });
 
 Route::controller(App\Http\Controllers\EoqSettingController::class)
     ->prefix('eoq_settings')
@@ -60,7 +60,7 @@ Route::controller(App\Http\Controllers\EoqSettingController::class)
         Route::get('/{eoqSetting}/edit', 'edit')->name('eoq_settings.edit');
         Route::put('/{eoqSetting}', 'update')->name('eoq_settings.update');
         Route::delete('/{eoqSetting}', 'destroy')->name('eoq_settings.destroy');
-    })->middleware('auth');
+    });
 
 Route::controller(App\Http\Controllers\UserController::class)
     ->prefix('users')
@@ -74,7 +74,7 @@ Route::controller(App\Http\Controllers\UserController::class)
         Route::put('/{user}', 'update')->name('users.update');
         Route::delete('/{user}', 'destroy')->name('users.destroy');
         Route::post('/{user}/reset-password', 'resetPassword')->name('users.resetPassword');
-    })->middleware('auth');
+    });
 
 Route::controller(App\Http\Controllers\ProductController::class)
     ->prefix('products')
@@ -87,7 +87,7 @@ Route::controller(App\Http\Controllers\ProductController::class)
         Route::get('/{product}/edit', 'edit')->name('products.edit');
         Route::put('/{product}', 'update')->name('products.update');
         Route::delete('/{product}', 'destroy')->name('products.destroy');
-    })->middleware('auth');
+    });
 
 Route::controller(App\Http\Controllers\StockInController::class)
     ->prefix('stock_in')
@@ -100,7 +100,7 @@ Route::controller(App\Http\Controllers\StockInController::class)
         Route::get('/{stockIn}/edit', 'edit')->name('stock_in.edit');
         Route::put('/{stockIn}', 'update')->name('stock_in.update');
         Route::delete('/{stockIn}', 'destroy')->name('stock_in.destroy');
-    })->middleware('auth');
+    });
 
 Route::controller(App\Http\Controllers\StockOutController::class)
     ->prefix('stock_out')
@@ -114,14 +114,14 @@ Route::controller(App\Http\Controllers\StockOutController::class)
         Route::get('/{stockOut}/edit', 'edit')->name('stock_out.edit');
         Route::put('/{stockOut}', 'update')->name('stock_out.update');
         Route::delete('/{stockOut}', 'destroy')->name('stock_out.destroy');
-    })->middleware('auth');
+    });
 Route::controller(App\Http\Controllers\ReportStockInController::class)
     ->prefix('report_stock_in')
     ->middleware('auth')
     ->group(function () {
         Route::get('/', 'index')->name('report_stock_in.index');
         Route::post('/store', 'store')->name('report_stock_in.store');
-    })->middleware('auth');
+    });
 
 Route::controller(App\Http\Controllers\ReportStockOutController::class)
     ->prefix('report_stock_out')
@@ -129,7 +129,7 @@ Route::controller(App\Http\Controllers\ReportStockOutController::class)
     ->group(function () {
         Route::get('/', 'index')->name('report_stock_out.index');
         Route::post('/store', 'store')->name('report_stock_out.store');
-    })->middleware('auth');
+    });
 
 Route::controller(App\Http\Controllers\EoqResultController::class)
     ->prefix('eoq_result')
@@ -139,7 +139,7 @@ Route::controller(App\Http\Controllers\EoqResultController::class)
         Route::get('/store', 'eoq')->name('eoq_result.store');
         Route::get('/show/{eoqResult}', 'show')->name('eoq_result.show');
         Route::delete('/{eoqResult}', 'destroy')->name('eoq_result.destroy');
-    })->middleware('auth');
+    });
 
 Route::get('/logout', function () {
     Auth::logout();

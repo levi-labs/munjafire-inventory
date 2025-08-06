@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EoqResult;
 use App\Models\Product;
 use App\Models\StockOut;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Notification;
 
 class StockOutController extends Controller
 {
@@ -56,6 +58,9 @@ class StockOutController extends Controller
                 'date' => $request->date,
                 'description' => $request->description,
             ]);
+            if ($product_id->stock < $request->quantity) {
+                return back()->with('info', 'Stock out failed, stock quantity is not enough');
+            }
             $product_id->decrement('stock', $request->quantity);
             DB::commit();
             return redirect()->route('stock_out.index')->with('success', 'Stock Out created successfully.');
@@ -101,9 +106,9 @@ class StockOutController extends Controller
 
         try {
             DB::beginTransaction();
-            $product_id = Product::findOrFail($request->product_id);
-            $oldQuantity = $stockOut->quantity;
-            $tempQuantity = ($product_id->stock + $oldQuantity) - $request->quantity;
+            $product_id     = Product::findOrFail($request->product_id);
+            $oldQuantity    = $stockOut->quantity;
+            $tempQuantity   = ($product_id->stock + $oldQuantity) - $request->quantity;
             $stockOut->update([
                 'product_id' => $request->product_id,
                 'price' => $request->price,
@@ -111,6 +116,20 @@ class StockOutController extends Controller
                 'date' => $request->date,
                 'description' => $request->description,
             ]);
+            if ($product_id->stock < $request->quantity) {
+                return back()->with('info', 'Stock out failed, stock quantity is not enough');
+            }
+            $eoq_result = EoqResult::where('product_id', $product_id->id)->first();
+            if ($eoq_result) {
+                Notification::create([
+                    'type' => 'info',
+                    'title' => 'safety stock',
+                    'message' => 'Some products have reached or fallen below their safety stock levels',
+                    'user_id' => Auth('web')->user()->id,
+                    'to_head' => 1,
+                    'to_admin' => 1
+                ]);
+            }
             $product_id->update(['stock' => $tempQuantity]);
             DB::commit();
             return redirect()->route('stock_out.index')->with('success', 'Stock Out updated successfully.');

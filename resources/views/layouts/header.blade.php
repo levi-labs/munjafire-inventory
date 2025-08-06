@@ -19,22 +19,30 @@
                  </div> --}}
 
                  <div class="dropdown for-message">
+                     @php
+                         $count_notification = \App\Models\Notification::where('is_read', 0)->limit(5)->count();
+                         $notifications = \App\Models\Notification::where('is_read', 0)->limit(5)->get();
+                     @endphp
+
                      <button class="btn btn-secondary dropdown-toggle" type="button" id="message"
                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                          <i class="fa fa-bell"></i>
-                         <span class="count bg-primary">1</span>
+                         <span class="count bg-primary">{{ $count_notification }}</span>
                      </button>
                      <div class="dropdown-menu" aria-labelledby="message">
-                         <p class="red">You have 1 Notification</p>
-                         <a class="dropdown-item media" href="#">
-                             <span class="photo media-left"><i class="fa fa-tasks"></i></span>
-                             <div class="message media-body">
-                                 <span class="name float-left">Restock Product</span>
-                                 <span class="time float-right">5 Minutes</span>
-                                 <p>Some products have reached or fallen below their safety stock levels</p>
-                             </div>
-                         </a>
+                         <p class="red">You have {{ $count_notification }} Notification</p>
 
+                         @forelse ($notifications as $notif)
+                             <a class="dropdown-item media" href="#">
+                                 <span class="photo media-left"><i class="fa fa-tasks"></i></span>
+                                 <div class="message media-body">
+                                     <span class="name float-left">{{ $notif->title }}</span>
+                                     <span class="time float-right">{{ $notif->created_at->diffForHumans() }}</span>
+                                     <p>{{ $notif->message }}</p>
+                                 </div>
+                             </a>
+                         @empty
+                         @endforelse
                      </div>
                  </div>
              </div>
