@@ -9,6 +9,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+Route::get('/login', function () {
+    return view('login.index');
+});
 
 Route::controller(App\Http\Controllers\SupplierController::class)
     ->prefix('suppliers')

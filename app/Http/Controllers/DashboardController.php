@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\EoqResult;
 use App\Models\Product;
 use App\Models\StockIn;
+use App\Models\StockOut;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,6 +17,12 @@ class DashboardController extends Controller
         $title = 'Dashboard Page';
         $products = Product::all();
         $colors = [];
+
+        $count_stock_in = StockIn::count();
+        $count_stock_out = StockOut::count();
+        $count_product = Product::count();
+        $count_user = User::count();
+
         foreach ($products as $product) {
             // generate warna RGB acak
             $r = rand(100, 255);
@@ -49,7 +57,11 @@ class DashboardController extends Controller
             'products',
             'colors',
             'stock_in',
-            'stock_out'
+            'stock_out',
+            'count_stock_in',
+            'count_stock_out',
+            'count_product',
+            'count_user'
         ));
     }
 }

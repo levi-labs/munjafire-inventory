@@ -26,7 +26,7 @@
                         </div>
                         <div class="stat-content">
                             <div class="text-left dib">
-                                <div class="stat-text"><span class="count">2356</span></div>
+                                <div class="stat-text"><span class="count">{{ $count_stock_out }}</span></div>
                                 <div class="stat-heading">Stock Out</div>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                         </div>
                         <div class="stat-content">
                             <div class="text-left dib">
-                                <div class="stat-text"><span class="count">3435</span></div>
+                                <div class="stat-text"><span class="count">{{ $count_stock_in }}</span></div>
                                 <div class="stat-heading">Stock In</div>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                         </div>
                         <div class="stat-content">
                             <div class="text-left dib">
-                                <div class="stat-text"><span class="count">349</span></div>
+                                <div class="stat-text"><span class="count">{{ $count_product }}</span></div>
                                 <div class="stat-heading">Products</div>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                         </div>
                         <div class="stat-content">
                             <div class="text-left dib">
-                                <div class="stat-text"><span class="count">5</span></div>
+                                <div class="stat-text"><span class="count">{{ $count_user }}</span></div>
                                 <div class="stat-heading">Users</div>
                             </div>
                         </div>
@@ -187,40 +187,22 @@
     <div class="clearfix"></div>
     <!-- Orders -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
     <script>
-        const product = document.getElementById('products');
+        // Chart.register(ChartDataLabels); // global plugin
+
         const stock_in = document.getElementById('stockin');
-        const stock_out = document.getElementById('stockout');
+
         const hoverstockInSum = {!! json_encode($stock_in->pluck('total_quantity')) !!}
         const hoverstockInCount = {!! json_encode($stock_in->pluck('total_product')) !!}
-        const hoverstockOutSum = {!! json_encode($stock_out->pluck('total_quantity')) !!}
-        const hoverstockOutCount = {!! json_encode($stock_out->pluck('total_product')) !!}
 
-        new Chart(product, {
-            type: 'bar',
-            data: {
-                labels: {!! json_encode($products->pluck('name')->toArray()) !!},
-                datasets: [{
-                    label: 'Stock Of Product',
-                    data: {!! json_encode($products->pluck('stock')->toArray()) !!},
-                    backgroundColor: {!! json_encode($colors) !!},
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
         new Chart(stock_in, {
-            type: 'doughnut',
+            type: 'pie',
             data: {
                 labels: {!! json_encode($stock_in->pluck('name')->toArray()) !!},
                 datasets: [{
-                    label: 'Stock Of Product',
+                    label: 'Stock In',
                     data: {!! json_encode($stock_in->pluck('total_product')->toArray()) !!},
                     backgroundColor: {!! json_encode($colors) !!},
                     borderWidth: 1
@@ -228,6 +210,18 @@
             },
             options: {
                 plugins: {
+                    datalabels: {
+                        color: '#black',
+                        formatter: (value, ctx) => {
+                            const index = ctx.dataIndex;
+                            const quantity = hoverstockInCount[index];
+                            return quantity + 'x';
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 14
+                        }
+                    },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
@@ -240,10 +234,14 @@
                         }
                     }
                 }
-            }
+            },
+            plugins: [ChartDataLabels]
         });
+        const stock_out = document.getElementById('stockout');
+        const hoverstockOutSum = {!! json_encode($stock_out->pluck('total_quantity')) !!}
+        const hoverstockOutCount = {!! json_encode($stock_out->pluck('total_product')) !!}
         new Chart(stock_out, {
-            type: 'doughnut',
+            type: 'pie',
             data: {
                 labels: {!! json_encode($stock_out->pluck('name')->toArray()) !!},
                 datasets: [{
@@ -255,6 +253,18 @@
             },
             options: {
                 plugins: {
+                    datalabels: {
+                        color: 'black',
+                        formatter: (value, ctx) => {
+                            const index = ctx.dataIndex;
+                            const quantity = hoverstockOutCount[index];
+                            return quantity + 'x';
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 14
+                        }
+                    },
                     tooltip: {
                         callbacks: {
                             label: function(context) {
@@ -267,7 +277,39 @@
                         }
                     }
                 }
-            }
+            },
+            plugins: [ChartDataLabels]
+        });
+        const product = document.getElementById('products');
+        new Chart(product, {
+            type: 'bar',
+            data: {
+                labels: {!! json_encode($products->pluck('name')->toArray()) !!},
+                datasets: [{
+                    label: 'Stock Of Product',
+                    data: {!! json_encode($products->pluck('stock')->toArray()) !!},
+                    backgroundColor: {!! json_encode($colors) !!},
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                datalabels: {
+                    color: 'black',
+                    formatter: (value, ctx) => {
+                        return value + ' Stock';
+                    },
+                    font: {
+                        weight: 'bold',
+                        size: 14
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
         });
     </script>
 @endsection
