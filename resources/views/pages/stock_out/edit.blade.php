@@ -28,7 +28,7 @@
                     <form action="{{ route('stock_out.update', $stockOut->id) }}" method="post" class="form-horizontal">
                         @method('PUT')
                         @csrf
-                        <div class="row form-group">
+                        {{-- <div class="row form-group">
                             <div class="col col-md-3">
                                 <label for="price" class=" form-control-label">
                                     Selling Price
@@ -41,7 +41,7 @@
                                     <small class="help-block form-text text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="row form-group">
                             <div class="col col-md-3">
                                 <label for="quantity" class=" form-control-label">

@@ -43,7 +43,6 @@ class StockOutController extends Controller
         $request->validate([
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
-            'price' => 'required|numeric|min:0',
             'date' => 'required|date',
             'description' => 'nullable|string|max:255',
         ]);
@@ -56,7 +55,7 @@ class StockOutController extends Controller
 
             StockOut::create([
                 'product_id' => $request->product_id,
-                'price' => $request->price,
+                'price' => $product_id->price,
                 'quantity' => $request->quantity,
                 'date' => $request->date,
                 'description' => $request->description,
@@ -100,7 +99,6 @@ class StockOutController extends Controller
         $request->validate([
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
-            'price' => 'required|numeric|min:0',
             'date' => 'required|date',
             'description' => 'nullable|string|max:255',
         ]);
@@ -115,7 +113,7 @@ class StockOutController extends Controller
             DB::beginTransaction();
             $stockOut->update([
                 'product_id' => $request->product_id,
-                'price' => $request->price,
+                'price' => $product_id->price,
                 'quantity' => $request->quantity,
                 'date' => $request->date,
                 'description' => $request->description,
