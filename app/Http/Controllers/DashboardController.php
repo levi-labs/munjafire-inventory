@@ -9,9 +9,11 @@ use App\Models\StockOut;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
+
     public function index()
     {
         $title = 'Dashboard Page';
@@ -63,5 +65,37 @@ class DashboardController extends Controller
             'count_product',
             'count_user'
         ));
+    }
+
+    public function changePassword()
+    {
+        $title = 'Change Password';
+
+        return view('pages.dashboard.change', compact('title'));
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required'
+        ]);
+
+        $old_password = $request->old_password;
+        $new_password = $request->new_password;
+
+        $user = User::where('id', Auth('web')->user()->id)->first();
+        if (!$user) {
+            return back()->with('error', 'user not found');
+        }
+
+        if (!Hash::check($old_password, $user->password)) {
+            return back()->with('error', 'your old password is incorrect');
+        }
+        $user->update([
+            'password' => bcrypt($new_password)
+        ]);
+
+        return back()->with('success', 'password successfully changed');
     }
 }

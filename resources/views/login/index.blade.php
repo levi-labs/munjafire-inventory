@@ -18,8 +18,8 @@
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
-    <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="{{ asset('/assets/css/cs-skin-elastic.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 
@@ -37,14 +37,30 @@
                     </a>
                 </div>
                 <div class="card login-form">
-                    <form>
+                    @if (session('error'))
+                        <div class="mt-2 sufee-alert alert with-close alert-danger alert-dismissible fade show">
+                            <span class="badge badge-pill badge-danger">Error</span>
+                            {{ session('error') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    @endif
+                    <form method="POST" action="{{ route('login.post') }}">
+                        @csrf
                         <div class="form-group">
                             <label>Username</label>
-                            <input type="email" class="form-control" placeholder="Username">
+                            <input type="text" class="form-control" placeholder="Username" name="username">
+                            @error('username')
+                                <span class="text-sm text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" class="form-control" placeholder="Password">
+                            <input type="password" class="form-control" placeholder="Password" name="password">
+                            @error('password')
+                                <span class="text-sm text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         {{-- <div class="checkbox">
                             <label>

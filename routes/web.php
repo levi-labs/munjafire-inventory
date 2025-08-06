@@ -1,20 +1,31 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
-Route::get('/', function () {
-    return view('layouts.main');
-});
+// Route::get('/', function () {
+//     return view('layouts.main');
+// });
+Route::controller(App\Http\Controllers\AuthController::class)
+    ->prefix('auth')
+    ->group(function () {
+        Route::get('/login', 'showLoginForm')->name('login.showLoginForm');
+        Route::post('/login', 'login')->name('login.post');
+    });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-Route::get('/login', function () {
-    return view('login.index');
-});
+Route::controller(DashboardController::class)
+    ->prefix('dashboard')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('/', 'index')->name('dashboard.index');
+        Route::get('/change-password', 'changePassword')->name('dashboard.changePassword');
+        Route::post('/update-password', 'updatePassword')->name('dashboard.updatePassword');
+    });
 
 Route::controller(App\Http\Controllers\SupplierController::class)
     ->prefix('suppliers')
+    ->middleware('auth')
     ->group(function () {
         Route::get('/', 'index')->name('suppliers.index');
         Route::get('/create', 'create')->name('suppliers.create');
@@ -27,6 +38,7 @@ Route::controller(App\Http\Controllers\SupplierController::class)
 
 Route::controller(App\Http\Controllers\CategoryController::class)
     ->prefix('categories')
+    ->middleware('auth')
     ->group(function () {
         Route::get('/', 'index')->name('categories.index');
         Route::get('/create', 'create')->name('categories.create');
@@ -35,10 +47,11 @@ Route::controller(App\Http\Controllers\CategoryController::class)
         Route::get('/{category}/edit', 'edit')->name('categories.edit');
         Route::put('/{category}', 'update')->name('categories.update');
         Route::delete('/{category}', 'destroy')->name('categories.destroy');
-    });
+    })->middleware('auth');
 
 Route::controller(App\Http\Controllers\EoqSettingController::class)
     ->prefix('eoq_settings')
+    ->middleware('auth')
     ->group(function () {
         Route::get('/', 'index')->name('eoq_settings.index');
         Route::get('/create', 'create')->name('eoq_settings.create');
@@ -47,10 +60,11 @@ Route::controller(App\Http\Controllers\EoqSettingController::class)
         Route::get('/{eoqSetting}/edit', 'edit')->name('eoq_settings.edit');
         Route::put('/{eoqSetting}', 'update')->name('eoq_settings.update');
         Route::delete('/{eoqSetting}', 'destroy')->name('eoq_settings.destroy');
-    });
+    })->middleware('auth');
 
 Route::controller(App\Http\Controllers\UserController::class)
     ->prefix('users')
+    ->middleware('auth')
     ->group(function () {
         Route::get('/', 'index')->name('users.index');
         Route::get('/create', 'create')->name('users.create');
@@ -60,10 +74,11 @@ Route::controller(App\Http\Controllers\UserController::class)
         Route::put('/{user}', 'update')->name('users.update');
         Route::delete('/{user}', 'destroy')->name('users.destroy');
         Route::post('/{user}/reset-password', 'resetPassword')->name('users.resetPassword');
-    });
+    })->middleware('auth');
 
 Route::controller(App\Http\Controllers\ProductController::class)
     ->prefix('products')
+    ->middleware('auth')
     ->group(function () {
         Route::get('/', 'index')->name('products.index');
         Route::get('/create', 'create')->name('products.create');
@@ -72,10 +87,11 @@ Route::controller(App\Http\Controllers\ProductController::class)
         Route::get('/{product}/edit', 'edit')->name('products.edit');
         Route::put('/{product}', 'update')->name('products.update');
         Route::delete('/{product}', 'destroy')->name('products.destroy');
-    });
+    })->middleware('auth');
 
 Route::controller(App\Http\Controllers\StockInController::class)
     ->prefix('stock_in')
+    ->middleware('auth')
     ->group(function () {
         Route::get('/', 'index')->name('stock_in.index');
         Route::get('/create', 'create')->name('stock_in.create');
@@ -84,10 +100,11 @@ Route::controller(App\Http\Controllers\StockInController::class)
         Route::get('/{stockIn}/edit', 'edit')->name('stock_in.edit');
         Route::put('/{stockIn}', 'update')->name('stock_in.update');
         Route::delete('/{stockIn}', 'destroy')->name('stock_in.destroy');
-    });
+    })->middleware('auth');
 
 Route::controller(App\Http\Controllers\StockOutController::class)
     ->prefix('stock_out')
+    ->middleware('auth')
     ->group(function () {
         Route::get('/', 'index')->name('stock_out.index');
         Route::get('/eoq', 'eoq')->name('stock_out.eoq');
@@ -97,26 +114,36 @@ Route::controller(App\Http\Controllers\StockOutController::class)
         Route::get('/{stockOut}/edit', 'edit')->name('stock_out.edit');
         Route::put('/{stockOut}', 'update')->name('stock_out.update');
         Route::delete('/{stockOut}', 'destroy')->name('stock_out.destroy');
-    });
+    })->middleware('auth');
 Route::controller(App\Http\Controllers\ReportStockInController::class)
     ->prefix('report_stock_in')
+    ->middleware('auth')
     ->group(function () {
         Route::get('/', 'index')->name('report_stock_in.index');
         Route::post('/store', 'store')->name('report_stock_in.store');
-    });
+    })->middleware('auth');
 
 Route::controller(App\Http\Controllers\ReportStockOutController::class)
     ->prefix('report_stock_out')
+    ->middleware('auth')
     ->group(function () {
         Route::get('/', 'index')->name('report_stock_out.index');
         Route::post('/store', 'store')->name('report_stock_out.store');
-    });
+    })->middleware('auth');
 
 Route::controller(App\Http\Controllers\EoqResultController::class)
     ->prefix('eoq_result')
+    ->middleware('auth')
     ->group(function () {
         Route::get('/', 'index')->name('eoq_result.index');
         Route::get('/store', 'eoq')->name('eoq_result.store');
         Route::get('/show/{eoqResult}', 'show')->name('eoq_result.show');
         Route::delete('/{eoqResult}', 'destroy')->name('eoq_result.destroy');
-    });
+    })->middleware('auth');
+
+Route::get('/logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();     // Hapus session
+    request()->session()->regenerateToken(); // Regenerate CSRF token
+    return redirect()->route('login.showLoginForm');
+})->name('logout');
