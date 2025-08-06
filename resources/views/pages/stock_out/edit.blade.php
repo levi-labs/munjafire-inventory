@@ -15,6 +15,15 @@
                 <div class="card-header">
                     <strong>Form {{ $title }}</strong>
                 </div>
+                @if (session('info'))
+                    <div class="mt-2 sufee-alert alert with-close alert-info alert-dismissible fade show">
+                        <span class="badge badge-pill badge-info">Info</span>
+                        {{ session('info') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                @endif
                 <div class="card-body">
                     <form action="{{ route('stock_out.update', $stockOut->id) }}" method="post" class="form-horizontal">
                         @method('PUT')

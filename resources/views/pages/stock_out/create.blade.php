@@ -6,6 +6,15 @@
                 <div class="card-header">
                     <strong class="card-title">{{ $title . ' Page' }} </strong>
                 </div>
+                @if (session('info'))
+                    <div class="mt-2 sufee-alert alert with-close alert-info alert-dismissible fade show">
+                        <span class="badge badge-pill badge-info">Info</span>
+                        {{ session('info') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

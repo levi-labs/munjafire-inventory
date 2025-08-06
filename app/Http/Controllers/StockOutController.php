@@ -47,10 +47,13 @@ class StockOutController extends Controller
             'date' => 'required|date',
             'description' => 'nullable|string|max:255',
         ]);
-
+        $product_id = Product::findOrFail($request->product_id);
+        if ($product_id->stock < $request->quantity) {
+            return back()->with('info', 'Stock out failed, stock quantity is not enough');
+        }
         try {
             DB::beginTransaction();
-            $product_id = Product::findOrFail($request->product_id);
+
             StockOut::create([
                 'product_id' => $request->product_id,
                 'price' => $request->price,
@@ -58,9 +61,7 @@ class StockOutController extends Controller
                 'date' => $request->date,
                 'description' => $request->description,
             ]);
-            if ($product_id->stock < $request->quantity) {
-                return back()->with('info', 'Stock out failed, stock quantity is not enough');
-            }
+
             $product_id->decrement('stock', $request->quantity);
             DB::commit();
             return redirect()->route('stock_out.index')->with('success', 'Stock Out created successfully.');
@@ -103,12 +104,15 @@ class StockOutController extends Controller
             'date' => 'required|date',
             'description' => 'nullable|string|max:255',
         ]);
-
+        $product_id     = Product::findOrFail($request->product_id);
+        $oldQuantity    = $stockOut->quantity;
+        $current_stock  = $product_id->stock + $oldQuantity;
+        $tempQuantity   = ($product_id->stock + $oldQuantity) - $request->quantity;
+        if ($current_stock < $request->quantity) {
+            return back()->with('success', 'Stock out failed stock quantity is not enough');
+        }
         try {
             DB::beginTransaction();
-            $product_id     = Product::findOrFail($request->product_id);
-            $oldQuantity    = $stockOut->quantity;
-            $tempQuantity   = ($product_id->stock + $oldQuantity) - $request->quantity;
             $stockOut->update([
                 'product_id' => $request->product_id,
                 'price' => $request->price,
@@ -116,9 +120,6 @@ class StockOutController extends Controller
                 'date' => $request->date,
                 'description' => $request->description,
             ]);
-            if ($product_id->stock < $request->quantity) {
-                return back()->with('info', 'Stock out failed, stock quantity is not enough');
-            }
             $eoq_result = EoqResult::where('product_id', $product_id->id)->first();
             if ($eoq_result) {
                 Notification::create([
