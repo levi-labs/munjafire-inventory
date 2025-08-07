@@ -106,9 +106,10 @@
         }
 
         hr {
-            border: 0;
-            border-top: 4px solid #000;
-            margin: 20px 0;
+            border: 2px solid #000;
+            /* border-top: 4px solid #000;
+            border-bottom: 4px solid #000; */
+            margin: 15px 0;
         }
 
         @media print {
@@ -131,7 +132,7 @@
                 height: auto;
                 /* padding: 10px; */
                 background-color: #fff;
-                border-bottom: 2px solid #000;
+                /* border-bottom: 2px solid #000; */
             }
 
             .row {
@@ -157,8 +158,8 @@
             }
 
             .logo {
-                width: 250px;
-                height: 60px;
+                width: 245px;
+                height: 80px;
             }
 
             .content-head {

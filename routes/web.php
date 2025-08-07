@@ -130,7 +130,13 @@ Route::controller(App\Http\Controllers\ReportStockOutController::class)
         Route::get('/', 'index')->name('report_stock_out.index');
         Route::post('/store', 'store')->name('report_stock_out.store');
     });
-
+Route::controller(App\Http\Controllers\ReportEoqController::class)
+    ->prefix('report_eoq')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('/', 'index')->name('report_eoq.index');
+        Route::post('/store', 'store')->name('report_eoq.store');
+    });
 Route::controller(App\Http\Controllers\EoqResultController::class)
     ->prefix('eoq_result')
     ->middleware('auth')

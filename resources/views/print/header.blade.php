@@ -11,7 +11,6 @@
                     <p>Jl. Pancasila IV, RT.02 RW13, Cicadas, Kec. Gn. Putri,Kabupaten Bogor, <br>Jawa Barat 16964,
                         Indonesia</p>
                     <p>Phone: 0812-1110-00717</p>
-                    <p>Email: </p>
                 </div>
             </div>
         </div>
