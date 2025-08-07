@@ -59,11 +59,16 @@ class ProductController extends Controller
         $eoq   = EoqResult::where('product_id', $product->id)
             ->orderBy('created_at', 'desc')
             ->first();
-
+        if ($eoq) {
+            return view('pages.products.show', compact(
+                'title',
+                'product',
+                'eoq'
+            ));
+        }
         return view('pages.products.show', compact(
             'title',
             'product',
-            'eoq'
         ));
     }
 
