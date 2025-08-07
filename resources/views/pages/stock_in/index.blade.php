@@ -47,7 +47,7 @@
                                     <td>
                                         {{ $stockIn->product->name }}
                                     </td>
-                                    <td>{{ $stockIn->price }}</td>
+                                    <td>{{ formatRupiah($stockIn->price) }}</td>
                                     <td>{{ $stockIn->quantity }}</td>
                                     <td>{{ $stockIn->date }}</td>
                                     <td>

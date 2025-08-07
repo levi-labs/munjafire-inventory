@@ -39,12 +39,31 @@
             font-weight: bold;
         }
 
+
+        .btn {
+            border-radius: 10px 10px 10px 10px !important;
+        }
+
+        .btn-primary {
+            background-color: #2b22aa !important;
+            color: white !important;
+            font-weight: bold !important;
+
+        }
+
+        .bg-munja {
+            background-color: #2b22aa;
+            color: white;
+            font-weight: bold;
+        }
+
         .card {
             border-radius: 20px !important;
         }
 
         .card-header {
-            border-radius: 20px 20px 0 0 !important;
+            border-radius: 20px 20px 0px 0px !important;
+
         }
 
         #weatherWidget .currentDesc {

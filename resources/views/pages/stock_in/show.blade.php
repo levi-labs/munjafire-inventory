@@ -29,7 +29,7 @@
                     <table class="table table-bordered mt-3">
                         <tr>
                             <th>Purchase Price</th>
-                            <td>{{ $stockIn->price }}</td>
+                            <td>{{ formatRupiah($stockIn->price) }}</td>
                         </tr>
                         <tr>
                             <th>Quantity</th>
@@ -54,7 +54,7 @@
                     <table class="table table-bordered mt-3">
                         <tr>
                             <th>Price</th>
-                            <td>{{ $stockIn->product->price }}</td>
+                            <td>{{ formatRupiah($stockIn->product->price) }}</td>
                         </tr>
                         <tr>
                             <th>Stock</th>

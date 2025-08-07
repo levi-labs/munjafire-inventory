@@ -12,7 +12,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-munja">
                     <strong>Form {{ $title }}</strong>
                 </div>
                 <div class="card-body">
@@ -73,7 +73,7 @@
                                         <option {{ $product->id == $stockIn->product_id ? 'selected' : '' }}
                                             value="{{ $product->id }}">{{ $product->name }}</option>
                                     @empty
-                                        <option disabled>No categories available</option>
+                                        <option disabled>No products available</option>
                                     @endforelse
                                 </select>
                                 @error('product_id')
@@ -89,10 +89,10 @@
                                 <select name="supplier_id" id="supplier" class="form-control">
                                     <option selected disabled>Please select</option>
                                     @forelse ($suppliers as $supplier)
-                                        <option {{ $product->id == $stockIn->product_id ? 'selected' : '' }}
+                                        <option {{ $supplier->id == $stockIn->supplier_id ? 'selected' : '' }}
                                             value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                                     @empty
-                                        <option disabled>No categories available</option>
+                                        <option disabled>No suppliers available</option>
                                     @endforelse
                                 </select>
                                 @error('supplier_id')
@@ -113,7 +113,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-right">
-                                <a href="{{ route('products.index') }}" class="btn btn-secondary btn-sm">
+                                <a href="{{ route('stock_in.index') }}" class="btn btn-secondary btn-sm">
                                     <i class="fa fa-ban"></i> Cancel
                                 </a>
                                 <button type="submit" class="btn btn-primary btn-sm">
