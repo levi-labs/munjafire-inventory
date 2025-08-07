@@ -140,6 +140,12 @@ Route::controller(App\Http\Controllers\EoqResultController::class)
         Route::get('/show/{eoqResult}', 'show')->name('eoq_result.show');
         Route::delete('/{eoqResult}', 'destroy')->name('eoq_result.destroy');
     });
+Route::controller(App\Http\Controllers\NotificationController::class)
+    ->prefix('notification')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('/read/{id}', 'read')->name('notification.read');
+    });
 
 Route::get('/logout', function () {
     Auth::logout();

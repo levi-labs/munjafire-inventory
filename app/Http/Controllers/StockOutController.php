@@ -50,6 +50,8 @@ class StockOutController extends Controller
         if ($product_id->stock < $request->quantity) {
             return back()->with('info', 'Stock out failed, stock quantity is not enough');
         }
+
+
         try {
             DB::beginTransaction();
 
@@ -60,6 +62,23 @@ class StockOutController extends Controller
                 'date' => $request->date,
                 'description' => $request->description,
             ]);
+            $eoq_result = EoqResult::where('product_id', $product_id->id)
+                ->orderBy('date', 'desc')
+                ->first();
+            if ($eoq_result) {
+                $tempQ = $product_id->stock - $request->quantity;
+                if ($tempQ <= $eoq_result->safety_stock) {
+                    Notification::create([
+                        'type' => 'info',
+                        'title' => 'safety stock',
+                        'message' => 'Some products have reached or fallen below their safety stock levels',
+                        'user_id' => Auth('web')->user()->id,
+                        'product_id' => $request->product_id,
+                        'to_head' => 1,
+                        'to_admin' => 1
+                    ]);
+                }
+            }
 
             $product_id->decrement('stock', $request->quantity);
             DB::commit();
@@ -118,16 +137,21 @@ class StockOutController extends Controller
                 'date' => $request->date,
                 'description' => $request->description,
             ]);
-            $eoq_result = EoqResult::where('product_id', $product_id->id)->first();
+            $eoq_result = EoqResult::where('product_id', $product_id->id)
+                ->orderBy('date', 'desc')
+                ->first();
             if ($eoq_result) {
-                Notification::create([
-                    'type' => 'info',
-                    'title' => 'safety stock',
-                    'message' => 'Some products have reached or fallen below their safety stock levels',
-                    'user_id' => Auth('web')->user()->id,
-                    'to_head' => 1,
-                    'to_admin' => 1
-                ]);
+                if ($product_id->stock <= $eoq_result->safety_stock) {
+                    Notification::create([
+                        'type' => 'info',
+                        'title' => 'safety stock',
+                        'message' => 'Some products have reached or fallen below their safety stock levels',
+                        'user_id' => Auth('web')->user()->id,
+                        'product_id' => $request->product_id,
+                        'to_head' => 1,
+                        'to_admin' => 1
+                    ]);
+                }
             }
             $product_id->update(['stock' => $tempQuantity]);
             DB::commit();
@@ -155,13 +179,4 @@ class StockOutController extends Controller
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
-
-    // public function eoq()
-    // {
-    //     $title = 'EOQ Settings';
-    //     $datas = getEoq(1); // Assuming product ID 1 for demonstration
-    //     if (!$datas) {
-    //         return view('pages.eoq_result.index','datas')
-    //     }
-    // }
 }

@@ -20,8 +20,15 @@
 
                  <div class="dropdown for-message">
                      @php
-                         $count_notification = \App\Models\Notification::where('is_read', 0)->limit(5)->count();
-                         $notifications = \App\Models\Notification::where('is_read', 0)->limit(5)->get();
+                         $count_total = \App\Models\Notification::where('is_read', 0)->count();
+                         if ($count_total >= 5) {
+                             $count_notification = \App\Models\Notification::where('is_read', 0)->limit(5)->count();
+                             $notifications = \App\Models\Notification::where('is_read', 0)->limit(5)->get();
+                         } else {
+                             $count_notification = \App\Models\Notification::where('is_read', 0)->count();
+                             $notifications = \App\Models\Notification::where('is_read', 0)->get();
+                         }
+
                      @endphp
 
                      <button class="btn btn-secondary dropdown-toggle" type="button" id="message"
@@ -33,12 +40,12 @@
                          <p class="red">You have {{ $count_notification }} Notification</p>
 
                          @forelse ($notifications as $notif)
-                             <a class="dropdown-item media" href="#">
+                             <a class="dropdown-item media" href="{{ route('notification.read', $notif->id) }}">
                                  <span class="photo media-left"><i class="fa fa-tasks"></i></span>
                                  <div class="message media-body">
                                      <span class="name float-left">{{ $notif->title }}</span>
                                      <span class="time float-right">{{ $notif->created_at->diffForHumans() }}</span>
-                                     <p>{{ $notif->message }}</p>
+                                     <p>{{ $notif->product->name ?? '-' }}<br>{{ $notif->message }}</p>
                                  </div>
                              </a>
                          @empty
@@ -52,10 +59,20 @@
                      aria-expanded="false">
                      {{-- <img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar"> --}}
                      <p>{{ auth('web')->user()->username }}</p>
-                 </a>
 
+                 </a>
+                 <style>
+                     .hr-role {
+                         margin-top: 0px !important;
+                         margin-bottom: 0px !important;
+                         border: 1px solid black;
+                     }
+                 </style>
                  <div class="user-menu dropdown-menu">
-                     {{-- <a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a> --}}
+                     <a class="nav-link" href="#">
+                         <i class="fa fa-user"></i>{{ ucfirst(auth('web')->user()->role) . ' Gudang' }}
+                         <hr class='hr-role'">
+                     </a>
 
                      {{-- <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span
                              class="count">13</span></a> --}}
