@@ -34,7 +34,7 @@
                      <button class="btn btn-secondary dropdown-toggle" type="button" id="message"
                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                          <i class="fa fa-bell"></i>
-                         <span class="count bg-primary">{{ $count_notification }}</span>
+                         <span class="count bg-munja">{{ $count_notification }}</span>
                      </button>
                      <div class="dropdown-menu" aria-labelledby="message">
                          <p class="red">You have {{ $count_notification }} Notification</p>
