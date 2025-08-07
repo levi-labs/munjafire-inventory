@@ -21,7 +21,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-munja">
                     <strong>Form {{ $title }}</strong>
                 </div>
                 <div class="card-body">

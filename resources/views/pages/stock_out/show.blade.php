@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header bg-indigo">
+                <div class="card-header bg-munja">
                     <strong class="card-title">Stock Out</strong>
                 </div>
 
@@ -47,7 +47,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header bg-indigo">
+                <div class="card-header bg-munja">
                     <strong class="card-title">Detail Product </strong>
                 </div>
                 <div class="card-body">
