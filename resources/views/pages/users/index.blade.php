@@ -60,7 +60,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Deleting this supplier may also delete related data. Are you sure?')">Delete</button>
+                                                onclick="return confirm('Deleting this user may also delete related data. Are you sure?')">Delete</button>
                                         </form>
                                     </td>
                                 </tr>

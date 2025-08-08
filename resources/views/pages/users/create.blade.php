@@ -67,7 +67,7 @@
                             <div class="col-12 col-md-9">
                                 <select name="role" id="role" class="form-control">
                                     <option selected disabled>Please select</option>
-                                    <option value="master">Master</option>
+                                    <option value="kepala">Kepala</option>
                                     <option value="admin">Admin</option>
                                 </select>
                                 @error('role')

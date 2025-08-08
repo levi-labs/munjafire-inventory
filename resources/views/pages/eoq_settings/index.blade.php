@@ -47,8 +47,8 @@
                         <tbody>
                             @foreach ($eoqSettings as $eoq)
                                 <tr>
-                                    <td>{{ $eoq->ordering_cost }}</td>
-                                    <td>{{ $eoq->storage_cost }}</td>
+                                    <td>{{ formatRupiah($eoq->ordering_cost) }}</td>
+                                    <td>{{ formatRupiah($eoq->storage_cost) }}</td>
                                     <td>{{ $eoq->lead_time }}</td>
                                     <td>
                                         {{-- <a href="{{ route('suppliers.edit', 1) }}" class="btn btn-info btn-sm">Detail</a> --}}

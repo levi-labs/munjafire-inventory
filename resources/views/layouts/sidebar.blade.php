@@ -5,24 +5,24 @@
                  <li class="active">
                      <a href="{{ route('dashboard.index') }}"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                  </li>
-                 <li class="menu-title">Master</li><!-- /.menu-title -->
-                 <li>
-                     <a href="{{ route('categories.index') }}"> <i class="menu-icon fa fa-cogs"></i>Category</a>
-                 </li>
-                 <li>
-                     <a href="{{ route('suppliers.index') }}"> <i class="menu-icon fa fa-table"></i>Supplier</a>
-                 </li>
-                 <li>
-                     <a href="{{ route('eoq_settings.index') }}"> <i class="menu-icon fa fa-bar-chart-o"></i>EOQ
-                         Setting</a>
-                 </li>
-                 <li>
-                     <a href="{{ route('users.index') }}"> <i class="menu-icon fa fa-users"></i>User Management</a>
-                 </li>
-
+                 @if (auth('web')->user()->role === 'kepala')
+                     <li class="menu-title">Master</li><!-- /.menu-title -->
+                     <li>
+                         <a href="{{ route('categories.index') }}"> <i class="menu-icon fa fa-cogs"></i>Category</a>
+                     </li>
+                     <li>
+                         <a href="{{ route('suppliers.index') }}"> <i class="menu-icon fa fa-table"></i>Supplier</a>
+                     </li>
+                     <li>
+                         <a href="{{ route('eoq_settings.index') }}"> <i class="menu-icon fa fa-bar-chart-o"></i>EOQ
+                             Setting</a>
+                     </li>
+                     <li>
+                         <a href="{{ route('users.index') }}"> <i class="menu-icon fa fa-users"></i>User Management</a>
+                     </li>
+                 @endif
 
                  <li class="menu-title">Menu</li><!-- /.menu-title -->
-
 
                  <li>
                      <a href="{{ route('products.index') }}"> <i class="menu-icon fa fa-tags"></i>Product</a>

@@ -91,7 +91,7 @@
         <script>
             $(document).ready(function() {
                 $('.js-example-basic-multiple').select2({
-                    placeholder: "Pilih negara bagian",
+                    placeholder: "Select Periode",
                     allowClear: true
                 });
 

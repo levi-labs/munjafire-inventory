@@ -38,7 +38,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:8',
-            'role' => 'required|string|in:admin,user',
+            'role' => 'required|string|in:admin,kepala',
         ]);
 
 
@@ -75,7 +75,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username,' . $user->id,
-            'role' => 'required|string|in:admin,user',
+            'role' => 'required|string|in:admin,kepala',
         ]);
 
         $user->update([

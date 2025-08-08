@@ -54,7 +54,7 @@
                             <div class="col-12 col-md-9">
                                 <select name="role" id="role" class="form-control">
                                     <option selected disabled>Please select</option>
-                                    <option {{ $user->role == 'master' ? 'selected' : '' }} value="master">Master</option>
+                                    <option {{ $user->role == 'kepala' ? 'selected' : '' }} value="kepala">Kepala</option>
                                     <option {{ $user->role == 'admin' ? 'selected' : '' }} value="admin">Admin</option>
                                 </select>
                                 @error('role')
