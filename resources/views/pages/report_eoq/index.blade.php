@@ -70,7 +70,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-right">
-                                <a href="{{ route('report_stock_in.index') }}" class="btn btn-secondary btn-sm">
+                                <a href="{{ route('report_eoq.index') }}" class="btn btn-secondary btn-sm">
                                     <i class="fa fa-ban"></i> Cancel
                                 </a>
                                 <button type="submit" class="btn btn-primary btn-sm">
