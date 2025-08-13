@@ -4,9 +4,13 @@ use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('layouts.main');
-// });
+Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect()->route('dashboard.index'); // atau route lainnya
+    }
+
+    return redirect()->route('login.showLoginForm');
+});
 Route::controller(App\Http\Controllers\AuthController::class)
     ->prefix('auth')
     ->group(function () {
